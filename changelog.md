@@ -8,7 +8,7 @@
 
 - Sanitize Aabbs by replacing `fn new(...) -> Self` with `fn try_new(...) -> Result<Self>`
 
-## 0.2.1
+## 2.1
 
 - Add support for intersection tests between `Polygon`s.
 - Unify the `intersects` methods of `Polygon` and `Aabb` under the `Intersects` trait
