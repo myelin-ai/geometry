@@ -15,4 +15,4 @@
     - Support calculating the `unit` vector
 
 ## 2.2
-- Add Vector::rotate
+- Add `Vector::rotate`
