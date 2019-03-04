@@ -1,3 +1,4 @@
+use crate::radians::Radians;
 use crate::Point;
 use serde_derive::{Deserialize, Serialize};
 use std::ops::{Add, Div, Mul, Sub};
@@ -126,12 +127,25 @@ impl Vector {
             other.unit() * self.dot_product(other) / other.magnitude()
         }
     }
+
+    /// Rotate a vector by the given amount (counterclockwise)
+    pub fn rotate(self, rotation: Radians) -> Vector {
+        let (rotation_sin, rotation_cos) = (-rotation.value()).sin_cos();
+        let rotated_x = rotation_cos * self.x + rotation_sin * self.y;
+        let rotated_y = -rotation_sin * self.x + rotation_cos * self.y;
+
+        Vector {
+            x: rotated_x,
+            y: rotated_y,
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use nearly_eq::assert_nearly_eq;
+    use std::f64::consts::{FRAC_PI_2, PI};
 
     #[test]
     fn is_equal_to_itself() {
@@ -570,5 +584,34 @@ mod tests {
 
         assert_nearly_eq!(expected_projection.x, projection.x);
         assert_nearly_eq!(expected_projection.y, projection.y);
+    }
+
+    #[test]
+    fn vector_rotated_by_0_does_not_change() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate(Radians::try_new(0.0).unwrap());
+
+        assert_nearly_eq!(vector.x, rotated_vector.x, 0.00001);
+        assert_nearly_eq!(vector.y, rotated_vector.y, 0.00001);
+    }
+
+    #[test]
+    fn vector_rotated_by_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate(Radians::try_new(PI).unwrap());
+
+        let expected_vector = Vector { x: -5.0, y: -10.0 };
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x, 0.00001);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y, 0.00001);
+    }
+
+    #[test]
+    fn vector_rotated_by_half_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate(Radians::try_new(FRAC_PI_2).unwrap());
+
+        let expected_vector = Vector { x: -10.0, y: 5.0 };
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x, 0.00001);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y, 0.00001);
     }
 }
