@@ -130,7 +130,11 @@ impl Vector {
 
     /// Rotate a vector by the given amount (counterclockwise)
     pub fn rotate(self, rotation: Radians) -> Vector {
-        let (rotation_sin, rotation_cos) = (-rotation.value()).sin_cos();
+        // Radians are contained in the range [0.0; 2π).
+        // However, the rotation should be applied counterclockwise, so we invert this value.
+        let adjusted_rotation = -rotation.value();
+
+        let (rotation_sin, rotation_cos) = adjusted_rotation.sin_cos();
         let rotated_x = rotation_cos * self.x + rotation_sin * self.y;
         let rotated_y = -rotation_sin * self.x + rotation_cos * self.y;
 
