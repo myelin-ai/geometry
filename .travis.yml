@@ -1,24 +1,28 @@
 sudo: false
-dist: trusty
+dist: xenial
 language: rust
+
+matrix:
+  include:
+    - rust: stable
+    - rust: beta
+    - rust: nightly-2019-02-22
+      env:
+        - CARGO_INCREMENTAL=0
+        - RUSTFLAGS='-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Zno-landing-pads'
 
 install:
 - rustup component add rustfmt clippy
-- cargo install -f grcov
-
-env:
-  global:
-  - CARGO_INCREMENTAL=0
-  - RUSTFLAGS='-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Zno-landing-pads'
+- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then cargo install -f grcov; fi
 
 script:
-- cargo build --all-features --verbose $CARGO_OPTIONS 
-- cargo test --all-features --verbose $CARGO_OPTIONS
-- ./coverage.sh
+- cargo build --all-features --verbose
+- cargo test --all-features --verbose
+- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then ./coverage.sh; fi
 - cargo clippy -- -Dwarnings
 - cargo clippy --tests -- -Dwarnings
 - cargo fmt --all -- --check
 - cargo doc --no-deps
 
 after_success:
-- bash <(curl -s https://codecov.io/bash) -f lcov.info
+- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then bash <(curl -s https://codecov.io/bash) -f lcov.info; fi
