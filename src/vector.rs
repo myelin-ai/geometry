@@ -591,8 +591,8 @@ mod tests {
         let vector = Vector { x: 5.0, y: 10.0 };
         let rotated_vector = vector.rotate(Radians::try_new(0.0).unwrap());
 
-        assert_nearly_eq!(vector.x, rotated_vector.x, 0.00001);
-        assert_nearly_eq!(vector.y, rotated_vector.y, 0.00001);
+        assert_nearly_eq!(vector.x, rotated_vector.x);
+        assert_nearly_eq!(vector.y, rotated_vector.y);
     }
 
     #[test]
@@ -601,8 +601,8 @@ mod tests {
         let rotated_vector = vector.rotate(Radians::try_new(PI).unwrap());
 
         let expected_vector = Vector { x: -5.0, y: -10.0 };
-        assert_nearly_eq!(expected_vector.x, rotated_vector.x, 0.00001);
-        assert_nearly_eq!(expected_vector.y, rotated_vector.y, 0.00001);
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y);
     }
 
     #[test]
@@ -611,7 +611,7 @@ mod tests {
         let rotated_vector = vector.rotate(Radians::try_new(FRAC_PI_2).unwrap());
 
         let expected_vector = Vector { x: -10.0, y: 5.0 };
-        assert_nearly_eq!(expected_vector.x, rotated_vector.x, 0.00001);
-        assert_nearly_eq!(expected_vector.y, rotated_vector.y, 0.00001);
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y);
     }
 }
