@@ -16,3 +16,6 @@
 
 ## 2.2
 - Add `Vector::rotate`
+
+## 2.3
+- Add `Vector::rotate_clockwise`
