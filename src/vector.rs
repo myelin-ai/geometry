@@ -146,7 +146,7 @@ impl Vector {
 
     /// Rotate a vector by the given amount (clockwise)
     pub fn rotate_clockwise(self, rotation: Radians) -> Vector {
-        let (rotation_sin, rotation_cos) = rotation.sin_cos();
+        let (rotation_sin, rotation_cos) = rotation.value().sin_cos();
         let rotated_x = rotation_cos * self.x + rotation_sin * self.y;
         let rotated_y = -rotation_sin * self.x + rotation_cos * self.y;
 
@@ -697,6 +697,18 @@ mod tests {
         let rotation = Radians::try_new(PI).unwrap();
         let rotated_vector = vector.rotate_clockwise(rotation);
         let rotated_vector = rotated_vector.rotate_clockwise(rotation);
+
+        assert_nearly_eq!(vector.x, rotated_vector.x);
+        assert_nearly_eq!(vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_then_counterclockwise_is_unchanged() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+
+        let rotation = Radians::try_new(1.234).unwrap();
+        let rotated_vector = vector.rotate_clockwise(rotation);
+        let rotated_vector = rotated_vector.rotate(rotation);
 
         assert_nearly_eq!(vector.x, rotated_vector.x);
         assert_nearly_eq!(vector.y, rotated_vector.y);
