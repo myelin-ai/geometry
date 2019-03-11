@@ -13,16 +13,16 @@ matrix:
 
 install:
 - rustup component add rustfmt clippy
-- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then cargo install -f grcov; fi
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then cargo install -f grcov; fi
 
 script:
 - cargo build --all-features --verbose
 - cargo test --all-features --verbose
-- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then ./coverage.sh; fi
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then ./coverage.sh; fi
 - cargo clippy -- -Dwarnings
 - cargo clippy --tests -- -Dwarnings
 - cargo fmt --all -- --check
 - cargo doc --no-deps
 
 after_success:
-- if [ "$TRAVIS_RUST_VERSION" = "nightly" ]; then bash <(curl -s https://codecov.io/bash) -f lcov.info; fi
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then bash <(curl -s https://codecov.io/bash) -f lcov.info; fi
