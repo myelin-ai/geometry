@@ -143,6 +143,18 @@ impl Vector {
             y: rotated_y,
         }
     }
+
+    /// Rotate a vector by the given amount (clockwise)
+    pub fn rotate_clockwise(self, rotation: Radians) -> Vector {
+        let (rotation_sin, rotation_cos) = rotation.value().sin_cos();
+        let rotated_x = rotation_cos * self.x + rotation_sin * self.y;
+        let rotated_y = -rotation_sin * self.x + rotation_cos * self.y;
+
+        Vector {
+            x: rotated_x,
+            y: rotated_y,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -591,7 +603,7 @@ mod tests {
     }
 
     #[test]
-    fn vector_rotated_by_0_does_not_change() {
+    fn vector_rotated_by_zero_does_not_change() {
         let vector = Vector { x: 5.0, y: 10.0 };
         let rotated_vector = vector.rotate(Radians::try_new(0.0).unwrap());
 
@@ -634,6 +646,68 @@ mod tests {
 
         let rotation = Radians::try_new(PI).unwrap();
         let rotated_vector = vector.rotate(rotation);
+        let rotated_vector = rotated_vector.rotate(rotation);
+
+        assert_nearly_eq!(vector.x, rotated_vector.x);
+        assert_nearly_eq!(vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_by_zero_does_not_change() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate_clockwise(Radians::try_new(0.0).unwrap());
+
+        assert_nearly_eq!(vector.x, rotated_vector.x);
+        assert_nearly_eq!(vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_by_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate_clockwise(Radians::try_new(PI).unwrap());
+
+        let expected_vector = Vector { x: -5.0, y: -10.0 };
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_by_half_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate_clockwise(Radians::try_new(FRAC_PI_2).unwrap());
+
+        let expected_vector = Vector { x: 10.0, y: -5.0 };
+        assert_nearly_eq!(expected_vector.x, rotated_vector.x);
+        assert_nearly_eq!(expected_vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_by_two_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+        let rotated_vector = vector.rotate_clockwise(Radians::try_new(1.999_999_999 * PI).unwrap());
+
+        assert_nearly_eq!(vector.x, rotated_vector.x, 0.000_001);
+        assert_nearly_eq!(vector.y, rotated_vector.y, 0.000_001);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_twice_by_pi_is_correct() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+
+        let rotation = Radians::try_new(PI).unwrap();
+        let rotated_vector = vector.rotate_clockwise(rotation);
+        let rotated_vector = rotated_vector.rotate_clockwise(rotation);
+
+        assert_nearly_eq!(vector.x, rotated_vector.x);
+        assert_nearly_eq!(vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn vector_rotated_clockwise_then_counterclockwise_is_unchanged() {
+        let vector = Vector { x: 5.0, y: 10.0 };
+
+        let rotation = Radians::try_new(1.234).unwrap();
+        let rotated_vector = vector.rotate_clockwise(rotation);
         let rotated_vector = rotated_vector.rotate(rotation);
 
         assert_nearly_eq!(vector.x, rotated_vector.x);
