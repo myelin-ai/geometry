@@ -44,10 +44,11 @@ impl Radians {
     /// ```
     /// use myelin_geometry::Radians;
     /// use std::f64::consts::PI;
+    /// use std::f64::consts::FRAC_PI_2;
     ///
     /// use nearly_eq::assert_nearly_eq;
     ///
-    /// assert_nearly_eq!(PI / 2.0, Radians::try_from_degrees(90.0).unwrap().value());
+    /// assert_nearly_eq!(FRAC_PI_2, Radians::try_from_degrees(90.0).unwrap().value());
     /// ```
     pub fn try_from_degrees(degrees: f64) -> Result<Self, RadiansError> {
         const MAX_DEGREES: f64 = 360.0;
