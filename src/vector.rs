@@ -156,7 +156,7 @@ impl Vector {
         }
     }
 
-    /// Negates the vector
+    /// Negates the vector, returning a vector with the same magnitude pointing in the opposite direction.
     pub fn negative(self) -> Self {
         self * -1.0
     }
