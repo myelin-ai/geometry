@@ -105,7 +105,7 @@ mod tests {
     fn try_get_radians_returns_none_with_359_as_input() {
         let degrees = 359.0;
         let radians = Radians::from_degrees(degrees).unwrap();
-        let expected = 2.0 * PI - PI / 180.0;
+        let expected = (2.0 * PI) - (PI / 180.0);
         assert_nearly_eq!(expected, radians.value())
     }
 
