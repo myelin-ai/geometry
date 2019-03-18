@@ -95,7 +95,7 @@ impl Vector {
     }
 
     /// Retuns the vector's normal vector, i.e. a vector that is perpendicular to this vector
-    pub fn normal(self) -> Vector {
+    pub fn normal(self) -> Self {
         Vector {
             x: -self.y,
             y: self.x,
@@ -108,7 +108,7 @@ impl Vector {
     }
 
     /// Returns unit vector of this vector, i.e. a vector with the same direction and a magnitude of 1
-    pub fn unit(self) -> Vector {
+    pub fn unit(self) -> Self {
         let magnitude = self.magnitude();
         assert!(
             magnitude != 0.0,
@@ -119,7 +119,7 @@ impl Vector {
     }
 
     /// Returns the projection of this vector onto another vector
-    pub fn project_onto(self, other: Vector) -> Vector {
+    pub fn project_onto(self, other: Self) -> Self {
         let zero_vector = Default::default();
         if self == zero_vector || other == zero_vector {
             zero_vector
@@ -129,7 +129,7 @@ impl Vector {
     }
 
     /// Rotate a vector by the given amount (counterclockwise)
-    pub fn rotate(self, rotation: Radians) -> Vector {
+    pub fn rotate(self, rotation: Radians) -> Self {
         // Radians are contained in the range [0.0; 2π).
         // However, the rotation should be applied counterclockwise, so we invert this value.
         let adjusted_rotation = -rotation.value();
@@ -145,7 +145,7 @@ impl Vector {
     }
 
     /// Rotate a vector by the given amount (clockwise)
-    pub fn rotate_clockwise(self, rotation: Radians) -> Vector {
+    pub fn rotate_clockwise(self, rotation: Radians) -> Self {
         let (rotation_sin, rotation_cos) = rotation.value().sin_cos();
         let rotated_x = rotation_cos * self.x + rotation_sin * self.y;
         let rotated_y = -rotation_sin * self.x + rotation_cos * self.y;
