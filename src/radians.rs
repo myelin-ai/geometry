@@ -37,7 +37,10 @@ impl Radians {
 
     /// Convert degrees to radians
     pub fn try_from_degrees(degrees: f64) -> Result<Self, RadiansError> {
-        return Radians::try_new(degrees / 360.0 * 2.0 * PI);
+        const MAX_DEGREES: f64 = 360.0;
+        const MAX_RADIANS: f64 = 2.0 * PI;
+
+        Radians::try_new(degrees / MAX_DEGREES * MAX_RADIANS)
     }
 }
 
