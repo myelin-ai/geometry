@@ -19,3 +19,6 @@
 
 ## 2.3
 - Add `Vector::rotate_clockwise`
+
+## TBD
+- Add `Vector::negative`
