@@ -720,11 +720,11 @@ mod tests {
     }
 
     #[test]
-    fn negative_works_with_default_vector() {
+    fn negative_works_with_zero_vector() {
         let vector = Vector::default();
         let expected_vector = vector;
 
-        let inverted_vector = vector.inverted();
+        let inverted_vector = vector.negative();
 
         assert_nearly_eq!(expected_vector.x, inverted_vector.x);
         assert_nearly_eq!(expected_vector.y, inverted_vector.y);
@@ -735,7 +735,7 @@ mod tests {
         let vector = Vector { x: 5.0, y: -10.0 };
         let expected_vector = Vector { x: -5.0, y: 10.0 };
 
-        let inverted_vector = vector.inverted();
+        let inverted_vector = vector.negative();
 
         assert_nearly_eq!(expected_vector.x, inverted_vector.x);
         assert_nearly_eq!(expected_vector.y, inverted_vector.y);
