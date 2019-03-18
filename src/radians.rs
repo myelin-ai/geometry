@@ -36,6 +36,19 @@ impl Radians {
     }
 
     /// Convert degrees to radians
+    ///
+    /// ### Errors
+    /// Returns a [`RadiansError`] if the given value is outside the range [0.0°; 360°)
+    ///
+    /// ### Examples
+    /// ```
+    /// use myelin_geometry::Radians;
+    /// use std::f64::consts::PI;
+    ///
+    /// use nearly_eq::assert_nearly_eq;
+    ///
+    /// assert_nearly_eq!(PI / 2.0, Radians::try_from_degrees(90.0).unwrap().value());
+    /// ```
     pub fn try_from_degrees(degrees: f64) -> Result<Self, RadiansError> {
         const MAX_DEGREES: f64 = 360.0;
         const MAX_RADIANS: f64 = 2.0 * PI;
