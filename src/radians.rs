@@ -35,8 +35,8 @@ impl Radians {
         self.value
     }
 
-    /// Try getting the radians value of the degrees
-    pub fn try_from_degrees(degrees: f64) -> Result<Radians, RadiansError> {
+    /// Convert degrees to radians
+    pub fn from_degrees(degrees: f64) -> Result<Self, RadiansError> {
         return Radians::try_new(degrees / 360.0 * 2.0 * PI);
     }
 }
@@ -96,59 +96,53 @@ mod tests {
     #[test]
     fn try_get_radians_works_with_0_as_input() {
         let degrees = 0.0;
-        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let radians = Radians::from_degrees(degrees).unwrap();
         let expected = 0.0;
         assert_nearly_eq!(expected, radians.value())
     }
-    #[test]
-    fn try_get_radians_works_with_360_as_input() {
-        let degrees = 360.0;
-        let radians = Radians::try_from_degrees(degrees);
-        match radians {
-            Ok(_) => assert!(false, "360 degrees is too big. 2 PI as radiant is disallowed"),
-            Err(_) => assert!(true),
-        }
-    }
+
     #[test]
     fn try_get_radians_returns_none_with_359_as_input() {
         let degrees = 359.0;
-        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let radians = Radians::from_degrees(degrees).unwrap();
         let expected = 2.0 * PI - PI / 180.0;
         assert_nearly_eq!(expected, radians.value())
     }
-    #[test]
-    fn try_get_radians_returns_none_with_negative_1_as_input() {
-        let degrees = -1.0;
-        let radians = Radians::try_from_degrees(degrees);
-        match radians {
-            Ok(_) => assert!(false, "Negative one isn not an allowed degrees value"),
-            Err(_) => assert!(true),
-        }
-    }
-    #[test]
-    fn try_get_radians_returns_none_with_361_as_input() {
-        let degrees = 361.0;
-        let radians = Radians::try_from_degrees(degrees);
-        match radians {
-            Ok(_) => assert!(
-                false,
-                "The maximum allowed degrees should be 360, which equals to 2 PI. 361 is too big."
-            ),
-            Err(_) => assert!(true),
-        }
-    }
+
     #[test]
     fn try_get_radians_works_with_180_as_input() {
         let degrees = 180.0;
-        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let radians = Radians::from_degrees(degrees).unwrap();
         let expected = PI;
         assert_nearly_eq!(expected, radians.value())
     }
+
     #[test]
     fn try_get_radians_works_with_1_as_input() {
         let degrees = 1.0;
-        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let radians = Radians::from_degrees(degrees).unwrap();
         let expected = PI / 180.0;
         assert_nearly_eq!(expected, radians.value())
+    }
+
+    #[test]
+    fn try_get_radians_works_with_360_as_input() {
+        let degrees = 360.0;
+        let radians = Radians::from_degrees(degrees);
+        assert!(radians.is_err());
+    }
+
+    #[test]
+    fn try_get_radians_returns_none_with_negative_1_as_input() {
+        let degrees = -1.0;
+        let radians = Radians::from_degrees(degrees);
+        assert!(radians.is_err());
+    }
+
+    #[test]
+    fn try_get_radians_returns_none_with_361_as_input() {
+        let degrees = 361.0;
+        let radians = Radians::from_degrees(degrees);
+        assert!(radians.is_err());
     }
 }
