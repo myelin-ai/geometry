@@ -155,6 +155,11 @@ impl Vector {
             y: rotated_y,
         }
     }
+
+    /// Negates the vector, returning a vector with the same magnitude pointing in the opposite direction.
+    pub fn negative(self) -> Self {
+        self * -1.0
+    }
 }
 
 #[cfg(test)]
@@ -712,5 +717,27 @@ mod tests {
 
         assert_nearly_eq!(vector.x, rotated_vector.x);
         assert_nearly_eq!(vector.y, rotated_vector.y);
+    }
+
+    #[test]
+    fn negative_works_with_zero_vector() {
+        let vector = Vector::default();
+        let expected_vector = vector;
+
+        let negative_vector = vector.negative();
+
+        assert_nearly_eq!(expected_vector.x, negative_vector.x);
+        assert_nearly_eq!(expected_vector.y, negative_vector.y);
+    }
+
+    #[test]
+    fn negative_works_with_5_and_negative_10() {
+        let vector = Vector { x: 5.0, y: -10.0 };
+        let expected_vector = Vector { x: -5.0, y: 10.0 };
+
+        let negative_vector = vector.negative();
+
+        assert_nearly_eq!(expected_vector.x, negative_vector.x);
+        assert_nearly_eq!(expected_vector.y, negative_vector.y);
     }
 }
