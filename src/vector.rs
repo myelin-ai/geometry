@@ -724,10 +724,10 @@ mod tests {
         let vector = Vector::default();
         let expected_vector = vector;
 
-        let inverted_vector = vector.negative();
+        let negative_vector = vector.negative();
 
-        assert_nearly_eq!(expected_vector.x, inverted_vector.x);
-        assert_nearly_eq!(expected_vector.y, inverted_vector.y);
+        assert_nearly_eq!(expected_vector.x, negative_vector.x);
+        assert_nearly_eq!(expected_vector.y, negative_vector.y);
     }
 
     #[test]
@@ -735,9 +735,9 @@ mod tests {
         let vector = Vector { x: 5.0, y: -10.0 };
         let expected_vector = Vector { x: -5.0, y: 10.0 };
 
-        let inverted_vector = vector.negative();
+        let negative_vector = vector.negative();
 
-        assert_nearly_eq!(expected_vector.x, inverted_vector.x);
-        assert_nearly_eq!(expected_vector.y, inverted_vector.y);
+        assert_nearly_eq!(expected_vector.x, negative_vector.x);
+        assert_nearly_eq!(expected_vector.y, negative_vector.y);
     }
 }
