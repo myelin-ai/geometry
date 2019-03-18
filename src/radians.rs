@@ -97,7 +97,7 @@ mod tests {
     }
 
     #[test]
-    fn try_get_radians_works_with_0_as_input() {
+    fn try_from_degrees_works_with_0_as_input() {
         let degrees = 0.0;
         let radians = Radians::try_from_degrees(degrees).unwrap();
         let expected = 0.0;
@@ -105,7 +105,7 @@ mod tests {
     }
 
     #[test]
-    fn try_get_radians_returns_none_with_359_as_input() {
+    fn try_from_degrees_returns_none_with_359_as_input() {
         let degrees = 359.0;
         let radians = Radians::try_from_degrees(degrees).unwrap();
         let expected = (2.0 * PI) - (PI / 180.0);
@@ -113,7 +113,7 @@ mod tests {
     }
 
     #[test]
-    fn try_get_radians_works_with_180_as_input() {
+    fn try_from_degrees_works_with_180_as_input() {
         let degrees = 180.0;
         let radians = Radians::try_from_degrees(degrees).unwrap();
         let expected = PI;
@@ -121,7 +121,7 @@ mod tests {
     }
 
     #[test]
-    fn try_get_radians_works_with_1_as_input() {
+    fn try_from_degrees_works_with_1_as_input() {
         let degrees = 1.0;
         let radians = Radians::try_from_degrees(degrees).unwrap();
         let expected = PI / 180.0;
@@ -129,21 +129,21 @@ mod tests {
     }
 
     #[test]
-    fn try_get_radians_works_with_360_as_input() {
+    fn try_from_degrees_works_with_360_as_input() {
         let degrees = 360.0;
         let radians = Radians::try_from_degrees(degrees);
         assert!(radians.is_err());
     }
 
     #[test]
-    fn try_get_radians_returns_none_with_negative_1_as_input() {
+    fn try_from_degrees_returns_none_with_negative_1_as_input() {
         let degrees = -1.0;
         let radians = Radians::try_from_degrees(degrees);
         assert!(radians.is_err());
     }
 
     #[test]
-    fn try_get_radians_returns_none_with_361_as_input() {
+    fn try_from_degrees_returns_none_with_361_as_input() {
         let degrees = 361.0;
         let radians = Radians::try_from_degrees(degrees);
         assert!(radians.is_err());
