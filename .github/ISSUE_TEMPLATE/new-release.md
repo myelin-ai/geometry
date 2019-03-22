@@ -9,7 +9,6 @@ assignees: ''
 
 # Prepare the release
 - [ ] Bump the version numbers
-- [ ] Update dependency versions for neighbouring crates
 - [ ] Update the `changelog.md` of updated crate
 - [ ] Create a pull request
 
