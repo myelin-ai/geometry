@@ -20,6 +20,6 @@
 ## 2.3
 - Add `Vector::rotate_clockwise`
 
-## TBD
+## 2.4
 - Add `Vector::negative`
 - Add `Radians::try_from_degrees`
