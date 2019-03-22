@@ -22,3 +22,4 @@
 
 ## TBD
 - Add `Vector::negative`
+- Add `Radians::try_from_degrees`

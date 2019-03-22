@@ -34,6 +34,28 @@ impl Radians {
     pub fn value(self) -> f64 {
         self.value
     }
+
+    /// Convert degrees to radians
+    ///
+    /// ### Errors
+    /// Returns a [`RadiansError`] if the given value is outside the range [0.0°; 360°)
+    ///
+    /// ### Examples
+    /// ```
+    /// use myelin_geometry::Radians;
+    /// use std::f64::consts::FRAC_PI_2;
+    /// use std::f64::consts::PI;
+    ///
+    /// use nearly_eq::assert_nearly_eq;
+    ///
+    /// assert_nearly_eq!(FRAC_PI_2, Radians::try_from_degrees(90.0).unwrap().value());
+    /// ```
+    pub fn try_from_degrees(degrees: f64) -> Result<Self, RadiansError> {
+        const MAX_DEGREES: f64 = 360.0;
+        const MAX_RADIANS: f64 = 2.0 * PI;
+
+        Radians::try_new(degrees / MAX_DEGREES * MAX_RADIANS)
+    }
 }
 
 /// The reason why a [`Radians`] instance could not be created
@@ -88,4 +110,56 @@ mod tests {
         assert_nearly_eq!(value, radians.value())
     }
 
+    #[test]
+    fn try_from_degrees_works_with_0_as_input() {
+        let degrees = 0.0;
+        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let expected = 0.0;
+        assert_nearly_eq!(expected, radians.value())
+    }
+
+    #[test]
+    fn try_from_degrees_returns_none_with_359_as_input() {
+        let degrees = 359.0;
+        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let expected = (2.0 * PI) - (PI / 180.0);
+        assert_nearly_eq!(expected, radians.value())
+    }
+
+    #[test]
+    fn try_from_degrees_works_with_180_as_input() {
+        let degrees = 180.0;
+        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let expected = PI;
+        assert_nearly_eq!(expected, radians.value())
+    }
+
+    #[test]
+    fn try_from_degrees_works_with_1_as_input() {
+        let degrees = 1.0;
+        let radians = Radians::try_from_degrees(degrees).unwrap();
+        let expected = PI / 180.0;
+        assert_nearly_eq!(expected, radians.value())
+    }
+
+    #[test]
+    fn try_from_degrees_works_with_360_as_input() {
+        let degrees = 360.0;
+        let radians = Radians::try_from_degrees(degrees);
+        assert!(radians.is_err());
+    }
+
+    #[test]
+    fn try_from_degrees_returns_none_with_negative_1_as_input() {
+        let degrees = -1.0;
+        let radians = Radians::try_from_degrees(degrees);
+        assert!(radians.is_err());
+    }
+
+    #[test]
+    fn try_from_degrees_returns_none_with_361_as_input() {
+        let degrees = 361.0;
+        let radians = Radians::try_from_degrees(degrees);
+        assert!(radians.is_err());
+    }
 }
