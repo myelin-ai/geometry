@@ -43,8 +43,8 @@ impl Radians {
     /// ### Examples
     /// ```
     /// use myelin_geometry::Radians;
-    /// use std::f64::consts::PI;
     /// use std::f64::consts::FRAC_PI_2;
+    /// use std::f64::consts::PI;
     ///
     /// use nearly_eq::assert_nearly_eq;
     ///
