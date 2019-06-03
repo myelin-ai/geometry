@@ -6,7 +6,7 @@ matrix:
   include:
     - rust: stable
     - rust: beta
-    - rust: nightly-2019-04-12
+    - rust: nightly-2019-06-02
       env:
         - CARGO_INCREMENTAL=0
         - RUSTFLAGS='-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Zno-landing-pads'
