@@ -87,11 +87,6 @@ impl Polygon {
 
     /// Checks if a given point rests inside the polygon
     pub fn contains_point(&self, point: Point) -> bool {
-        // Anything less than a line cannot "contain" anything
-        if self.vertices.len() < 2 {
-            return false;
-        }
-
         let vector_to_point: Vector = point.into();
         // The following unwraps are safe, as we do an
         // early return if we don't contain at least 2 vertices
