@@ -94,7 +94,7 @@ impl Vector {
         self.x * other.y - self.y * other.x
     }
 
-    /// Retuns the vector's normal vector, i.e. a vector that is perpendicular to this vector
+    /// Returns the vector's normal vector, i.e. a vector that is perpendicular to this vector
     pub fn normal(self) -> Self {
         Vector {
             x: -self.y,
@@ -107,7 +107,7 @@ impl Vector {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 
-    /// Returns unit vector of this vector, i.e. a vector with the same direction and a magnitude of 1
+    /// Returns the unit vector of this vector, i.e. a vector with the same direction and a magnitude of 1
     pub fn unit(self) -> Self {
         let magnitude = self.magnitude();
         assert!(
