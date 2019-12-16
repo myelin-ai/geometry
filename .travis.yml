@@ -18,7 +18,7 @@ install:
 script:
 - cargo build --all-features --verbose
 - cargo test --all-features --verbose
-- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then ./coverage.sh; fi
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then ./.travis/coverage.sh; fi
 - cargo clippy -- -Dwarnings
 - cargo clippy --tests -- -Dwarnings
 - if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; cargo fmt --all -- --check
