@@ -13,7 +13,7 @@ matrix:
 
 install:
 - rustup component add rustfmt clippy
-- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then cargo install -f grcov; fi
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then ./.travis/install-grcov.sh; fi
 
 script:
 - cargo build --all-features --verbose
