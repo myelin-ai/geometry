@@ -5,7 +5,7 @@ use super::*;
 use crate::ConvexHull;
 use crate::Intersects;
 use itertools::Itertools;
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 
 mod builder;
 

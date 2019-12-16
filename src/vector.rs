@@ -1,6 +1,6 @@
 use crate::radians::Radians;
 use crate::Point;
-use serde_derive::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use std::ops::{Add, Div, Mul, Sub};
 
 /// A vector
