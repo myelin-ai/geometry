@@ -167,4 +167,14 @@ mod tests {
         let radians = Radians::try_from_degrees(degrees);
         assert!(radians.is_err());
     }
+
+    #[test]
+    fn half_turn_constant_is_valid_radian_value() {
+        assert!(Radians::try_new(Radians::HALF_TURN.value()).is_ok());
+    }
+
+    #[test]
+    fn quarter_turn_constant_is_valid_radian_value() {
+        assert!(Radians::try_new(Radians::QUARTER_TURN.value()).is_ok());
+    }
 }
