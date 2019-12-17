@@ -23,3 +23,8 @@
 ## 2.4.0
 - Add `Vector::negative`
 - Add `Radians::try_from_degrees`
+
+## 2.4.1
+- Correct small typos in the documentation.
+- Remove an unnecessary check.
+- Remove direct dependency on `serde_derive`.
