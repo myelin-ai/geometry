@@ -23,9 +23,9 @@ impl Radians {
     /// ### Examples
     /// ```
     /// use myelin_geometry::Radians;
-    /// use std::f64::consts::PI;
+    /// use std::f64::consts::FRAC_PI_3;
     ///
-    /// let rotation = Radians::try_new(PI).expect("Value was outside the range [0.0; 2π)");
+    /// let rotation = Radians::try_new(FRAC_PI_3).expect("Value was outside the range [0.0; 2π)");
     /// ```
     pub fn try_new(value: f64) -> Result<Self, RadiansError> {
         if value >= 0.0 && value < 2.0 * PI {
