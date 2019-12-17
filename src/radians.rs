@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::f64::consts::PI;
+use std::f64::consts::{FRAC_PI_2, PI};
 use std::fmt;
 
 /// A radian confined to the range of [0.0; 2π)
@@ -10,6 +10,11 @@ pub struct Radians {
 }
 
 impl Radians {
+    /// Radians value representing a half turn (π)
+    pub const HALF_TURN: Radians = Radians { value: PI };
+    /// Radians value representing a quarter turn (π/2)
+    pub const QUARTER_TURN: Radians = Radians { value: FRAC_PI_2 };
+
     /// Creates a new instance of [`Radians`].
     ///
     /// ### Errors
