@@ -8,5 +8,5 @@ grcov geometry.zip \
        --llvm \
        --branch \
        --ignore-not-existing \
-       --ignore-dir '/*' \
+       --ignore '/*' \
        > lcov.info
