@@ -21,7 +21,7 @@ script:
 - if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then ./.travis/coverage.sh; fi
 - cargo clippy -- -Dwarnings
 - cargo clippy --tests -- -Dwarnings
-- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; cargo fmt --all -- --check
+- if [[ "$TRAVIS_RUST_VERSION" = nightly* ]]; then cargo fmt --all -- --check; fi
 - cargo doc --no-deps
 
 after_success:
