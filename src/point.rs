@@ -17,10 +17,10 @@ impl From<(f64, f64)> for Point {
     }
 }
 
-impl Add for Point {
-    type Output = Point;
+impl Add<Vector> for Point {
+    type Output = Self;
 
-    fn add(self, other: Self::Output) -> Self::Output {
+    fn add(self, other: Vector) -> Self::Output {
         Point {
             x: self.x + other.x,
             y: self.y + other.y,
@@ -29,10 +29,10 @@ impl Add for Point {
 }
 
 impl Sub for Point {
-    type Output = Point;
+    type Output = Vector;
 
-    fn sub(self, other: Self::Output) -> Self::Output {
-        Point {
+    fn sub(self, other: Self) -> Self::Output {
+        Vector {
             x: self.x - other.x,
             y: self.y - other.y,
         }

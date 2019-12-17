@@ -49,8 +49,8 @@ impl Polygon {
     }
 
     /// Apply translation specified by `translation`, represented as
-    /// a relative point
-    pub fn translate(&self, translation: Point) -> Self {
+    /// a vector
+    pub fn translate(&self, translation: Vector) -> Self {
         let translated_vertices = self
             .vertices
             .iter()
