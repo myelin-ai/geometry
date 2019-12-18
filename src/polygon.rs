@@ -292,6 +292,12 @@ mod tests {
     }
 
     #[test]
+    fn translate_does_nothing_when_zero() {
+        let polygon = polygon();
+        assert_eq!(polygon, polygon.translate(Vector::default()));
+    }
+
+    #[test]
     fn rotates_by_pi() {
         let polygon = polygon();
 
