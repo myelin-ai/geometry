@@ -271,8 +271,8 @@ mod tests {
             .unwrap()
     }
 
-    fn translation() -> Point {
-        Point { x: 30.0, y: 40.0 }
+    fn translation() -> Vector {
+        Vector { x: 30.0, y: 40.0 }
     }
 
     #[test]
@@ -357,6 +357,7 @@ mod tests {
     fn translates_and_rotates() {
         let polygon = polygon();
         let translation = translation();
+        let rotation_anchor_point = Point::from(translation);
         let translated_polygon = polygon.translate(translation);
 
         assert_eq!(
@@ -380,13 +381,14 @@ mod tests {
                     },
                 ],
             },
-            translated_polygon.rotate_around_point(Radians::try_new(3.0).unwrap(), translation)
+            translated_polygon
+                .rotate_around_point(Radians::try_new(3.0).unwrap(), rotation_anchor_point)
         );
     }
 
     #[test]
     fn contains_point_when_point_is_positive() {
-        let translation = Point { x: 10.43, y: 20.1 };
+        let translation = Vector { x: 10.43, y: 20.1 };
         let polygon = polygon().translate(translation);
         let point = Point { x: 12.0, y: 18.0 };
         assert!(polygon.contains_point(point));
@@ -394,7 +396,7 @@ mod tests {
 
     #[test]
     fn contains_point_when_point_is_negative() {
-        let translation = Point { x: -20.0, y: -5.0 };
+        let translation = Vector { x: -20.0, y: -5.0 };
         let polygon = polygon().translate(translation);
         let point = Point { x: -21.70, y: -2.3 };
         assert!(polygon.contains_point(point));
@@ -433,7 +435,7 @@ mod tests {
 
     #[test]
     fn does_not_contain_point_when_point_is_at_zero() {
-        let translation = Point { x: 11.0, y: 11.0 };
+        let translation = Vector { x: 11.0, y: 11.0 };
         let polygon = polygon().translate(translation);
         let point = Point::default();
         assert!(!polygon.contains_point(point));
