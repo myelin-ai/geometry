@@ -70,7 +70,7 @@ impl Polygon {
             .iter()
             .map(|&vertex| {
                 // See https://en.wikipedia.org/wiki/Rotation_matrix
-                let delta = vertex - point;
+                let delta = Vector::from_points(vertex, point);
                 let (rotation_sin, rotation_cos) = rotation.sin_cos();
                 let rotated_x = rotation_cos * delta.x + rotation_sin * delta.y + point.x;
                 let rotated_y = -rotation_sin * delta.x + rotation_cos * delta.y + point.y;
@@ -140,8 +140,7 @@ impl Polygon {
         vertices
             .iter()
             .zip(shifted_vertices)
-            .map(|(&first_vertex, &second_vertex)| second_vertex - first_vertex)
-            .map(Vector::from)
+            .map(|(&first_vertex, &second_vertex)| Vector::from_points(second_vertex, first_vertex))
     }
 
     fn scalar_project_onto_unit_vector(&self, axis: Vector) -> (f64, f64) {
