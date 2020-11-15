@@ -260,7 +260,6 @@ enum Side {
 mod tests {
     use self::builder::PolygonBuilder;
     use super::*;
-    use std::f64::consts::PI;
 
     fn polygon() -> Polygon {
         PolygonBuilder::default()
@@ -318,7 +317,7 @@ mod tests {
                     },
                 ],
             },
-            polygon.rotate_around_point(Radians::try_new(PI).unwrap(), Point::default())
+            polygon.rotate_around_point(Radians::HALF_TURN, Point::default())
         );
     }
 

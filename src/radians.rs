@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::f64::consts::PI;
+use std::f64::consts::{FRAC_PI_2, PI};
 use std::fmt;
 
 /// A radian confined to the range of [0.0; 2π)
@@ -10,6 +10,11 @@ pub struct Radians {
 }
 
 impl Radians {
+    /// Radians value representing a half turn (π)
+    pub const HALF_TURN: Radians = Radians { value: PI };
+    /// Radians value representing a quarter turn (π/2)
+    pub const QUARTER_TURN: Radians = Radians { value: FRAC_PI_2 };
+
     /// Creates a new instance of [`Radians`].
     ///
     /// ### Errors
@@ -18,9 +23,9 @@ impl Radians {
     /// ### Examples
     /// ```
     /// use myelin_geometry::Radians;
-    /// use std::f64::consts::PI;
+    /// use std::f64::consts::FRAC_PI_3;
     ///
-    /// let rotation = Radians::try_new(PI).expect("Value was outside the range [0.0; 2π)");
+    /// let rotation = Radians::try_new(FRAC_PI_3).expect("Value was outside the range [0.0; 2π)");
     /// ```
     pub fn try_new(value: f64) -> Result<Self, RadiansError> {
         if value >= 0.0 && value < 2.0 * PI {
@@ -161,5 +166,15 @@ mod tests {
         let degrees = 361.0;
         let radians = Radians::try_from_degrees(degrees);
         assert!(radians.is_err());
+    }
+
+    #[test]
+    fn half_turn_constant_is_valid_radian_value() {
+        assert!(Radians::try_new(Radians::HALF_TURN.value()).is_ok());
+    }
+
+    #[test]
+    fn quarter_turn_constant_is_valid_radian_value() {
+        assert!(Radians::try_new(Radians::QUARTER_TURN.value()).is_ok());
     }
 }

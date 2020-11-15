@@ -166,7 +166,7 @@ impl Vector {
 mod tests {
     use super::*;
     use nearly_eq::assert_nearly_eq;
-    use std::f64::consts::{FRAC_PI_2, PI};
+    use std::f64::consts::PI;
 
     #[test]
     fn is_equal_to_itself() {
@@ -610,7 +610,7 @@ mod tests {
     #[test]
     fn vector_rotated_by_zero_does_not_change() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate(Radians::try_new(0.0).unwrap());
+        let rotated_vector = vector.rotate(Radians::default());
 
         assert_nearly_eq!(vector.x, rotated_vector.x);
         assert_nearly_eq!(vector.y, rotated_vector.y);
@@ -619,7 +619,7 @@ mod tests {
     #[test]
     fn vector_rotated_by_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate(Radians::try_new(PI).unwrap());
+        let rotated_vector = vector.rotate(Radians::HALF_TURN);
 
         let expected_vector = Vector { x: -5.0, y: -10.0 };
         assert_nearly_eq!(expected_vector.x, rotated_vector.x);
@@ -629,7 +629,7 @@ mod tests {
     #[test]
     fn vector_rotated_by_half_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate(Radians::try_new(FRAC_PI_2).unwrap());
+        let rotated_vector = vector.rotate(Radians::QUARTER_TURN);
 
         let expected_vector = Vector { x: -10.0, y: 5.0 };
         assert_nearly_eq!(expected_vector.x, rotated_vector.x);
@@ -649,7 +649,7 @@ mod tests {
     fn vector_rotated_twice_by_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
 
-        let rotation = Radians::try_new(PI).unwrap();
+        let rotation = Radians::HALF_TURN;
         let rotated_vector = vector.rotate(rotation);
         let rotated_vector = rotated_vector.rotate(rotation);
 
@@ -660,7 +660,7 @@ mod tests {
     #[test]
     fn vector_rotated_clockwise_by_zero_does_not_change() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate_clockwise(Radians::try_new(0.0).unwrap());
+        let rotated_vector = vector.rotate_clockwise(Radians::default());
 
         assert_nearly_eq!(vector.x, rotated_vector.x);
         assert_nearly_eq!(vector.y, rotated_vector.y);
@@ -669,7 +669,7 @@ mod tests {
     #[test]
     fn vector_rotated_clockwise_by_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate_clockwise(Radians::try_new(PI).unwrap());
+        let rotated_vector = vector.rotate_clockwise(Radians::HALF_TURN);
 
         let expected_vector = Vector { x: -5.0, y: -10.0 };
         assert_nearly_eq!(expected_vector.x, rotated_vector.x);
@@ -679,7 +679,7 @@ mod tests {
     #[test]
     fn vector_rotated_clockwise_by_half_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
-        let rotated_vector = vector.rotate_clockwise(Radians::try_new(FRAC_PI_2).unwrap());
+        let rotated_vector = vector.rotate_clockwise(Radians::QUARTER_TURN);
 
         let expected_vector = Vector { x: 10.0, y: -5.0 };
         assert_nearly_eq!(expected_vector.x, rotated_vector.x);
@@ -699,7 +699,7 @@ mod tests {
     fn vector_rotated_clockwise_twice_by_pi_is_correct() {
         let vector = Vector { x: 5.0, y: 10.0 };
 
-        let rotation = Radians::try_new(PI).unwrap();
+        let rotation = Radians::HALF_TURN;
         let rotated_vector = vector.rotate_clockwise(rotation);
         let rotated_vector = rotated_vector.rotate_clockwise(rotation);
 
