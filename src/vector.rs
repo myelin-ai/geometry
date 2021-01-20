@@ -169,12 +169,14 @@ mod tests {
     use std::f64::consts::{FRAC_PI_2, PI};
 
     #[test]
+    #[allow(clippy::eq_op)]
     fn is_equal_to_itself() {
         let vector = Vector { x: -12.9, y: 45.1 };
         assert_eq!(vector, vector);
     }
 
     #[test]
+    #[allow(clippy::eq_op)]
     fn is_equal_to_itself_when_zero() {
         let vector = Vector { x: 0.0, y: 0.0 };
         assert_eq!(vector, vector);
