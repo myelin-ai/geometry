@@ -7,6 +7,7 @@
     clippy::doc_markdown,
     clippy::unimplemented
 )]
+#![allow(clippy::result_unit_err)]
 
 mod aabb;
 pub use self::aabb::*;

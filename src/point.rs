@@ -53,12 +53,14 @@ mod tests {
     use super::*;
 
     #[test]
+    #[allow(clippy::eq_op)]
     fn is_equal_to_itself() {
         let point = Point { x: -12.9, y: 45.1 };
         assert_eq!(point, point);
     }
 
     #[test]
+    #[allow(clippy::eq_op)]
     fn is_equal_to_itself_when_zero() {
         let point = Point { x: 0.0, y: 0.0 };
         assert_eq!(point, point);
