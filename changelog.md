@@ -29,5 +29,5 @@
 - Remove an unnecessary check.
 - Remove direct dependency on `serde_derive`.
 
-## Unreleased
+## 2.4.2
 - Explicitly disallow NaN, +∞ and -∞ in polygons instead of looping forever (#36).
