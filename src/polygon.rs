@@ -562,6 +562,84 @@ mod tests {
     }
 
     #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_positive_infinity() {
+        let vertices = vec![
+            Point {
+                x: f64::INFINITY,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_negative_infinity() {
+        let vertices = vec![
+            Point {
+                x: f64::NEG_INFINITY,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_nan() {
+        let vertices = vec![
+            Point {
+                x: f64::NAN,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_positive_infinity() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::INFINITY,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_negative_infinity() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::NEG_INFINITY,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_nan() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::NAN,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
     fn can_be_created_from_aabb() {
         let aabb = Aabb::try_new(Point { x: 10.0, y: 15.0 }, Point { x: 20.0, y: 30.0 }).unwrap();
         let expected_polygon = Polygon::try_new(vec![
