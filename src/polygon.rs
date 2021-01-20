@@ -35,7 +35,9 @@ impl Polygon {
     pub fn try_new(vertices: Vec<Point>) -> Result<Self, ()> {
         const MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY: usize = 3;
 
-        if vertices.len() >= MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY && is_convex_polygon(&vertices)
+        if vertices.len() >= MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY
+            && vertices.iter().all(is_finite)
+            && is_convex_polygon(&vertices)
         {
             Ok(Self { vertices })
         } else {
@@ -242,6 +244,10 @@ fn calculate_facing_side(a: Vector, b: Vector, point: Vector) -> Side {
 fn is_convex_polygon(vertices: &[Point]) -> bool {
     let convex_hull_vertice_count = ConvexHull::try_new(vertices).unwrap().count();
     convex_hull_vertice_count == vertices.len()
+}
+
+fn is_finite(vertice: &Point) -> bool {
+    vertice.x.is_finite() && vertice.y.is_finite()
 }
 
 /// The side that a [`Point`] lies on, from the
