@@ -23,7 +23,8 @@ impl Radians {
     /// let rotation = Radians::try_new(PI).expect("Value was outside the range [0.0; 2π)");
     /// ```
     pub fn try_new(value: f64) -> Result<Self, RadiansError> {
-        if (0.0..TAU).contains(&value) {
+        const VALID_VALUES_RANGE: std::ops::Range<f64> = 0.0..TAU;
+        if VALID_VALUES_RANGE.contains(&value) {
             Ok(Radians { value })
         } else {
             Err(RadiansError::OutOfRange)
