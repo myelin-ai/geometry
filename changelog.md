@@ -28,3 +28,6 @@
 - Correct small typos in the documentation.
 - Remove an unnecessary check.
 - Remove direct dependency on `serde_derive`.
+
+## 2.4.2
+- Explicitly disallow NaN, +∞ and -∞ in polygons instead of looping forever (#36).

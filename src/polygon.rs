@@ -35,7 +35,9 @@ impl Polygon {
     pub fn try_new(vertices: Vec<Point>) -> Result<Self, ()> {
         const MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY: usize = 3;
 
-        if vertices.len() >= MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY && is_convex_polygon(&vertices)
+        if vertices.len() >= MINIMUM_VERTICES_IN_EUCLIDEAN_GEOMETRY
+            && vertices.iter().all(is_finite)
+            && is_convex_polygon(&vertices)
         {
             Ok(Self { vertices })
         } else {
@@ -242,6 +244,10 @@ fn calculate_facing_side(a: Vector, b: Vector, point: Vector) -> Side {
 fn is_convex_polygon(vertices: &[Point]) -> bool {
     let convex_hull_vertice_count = ConvexHull::try_new(vertices).unwrap().count();
     convex_hull_vertice_count == vertices.len()
+}
+
+fn is_finite(vertice: &Point) -> bool {
+    vertice.x.is_finite() && vertice.y.is_finite()
 }
 
 /// The side that a [`Point`] lies on, from the
@@ -559,6 +565,84 @@ mod tests {
             }),
             Polygon::try_new(vertices)
         );
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_positive_infinity() {
+        let vertices = vec![
+            Point {
+                x: f64::INFINITY,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_negative_infinity() {
+        let vertices = vec![
+            Point {
+                x: f64::NEG_INFINITY,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_x_value_of_vertice_is_nan() {
+        let vertices = vec![
+            Point {
+                x: f64::NAN,
+                y: 0.0,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_positive_infinity() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::INFINITY,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_negative_infinity() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::NEG_INFINITY,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
+    }
+
+    #[test]
+    fn try_new_does_not_work_when_y_value_of_vertice_is_nan() {
+        let vertices = vec![
+            Point {
+                x: 0.0,
+                y: f64::NAN,
+            },
+            Point { x: 1.0, y: 0.0 },
+            Point { x: 0.0, y: 1.0 },
+        ];
+        assert!(Polygon::try_new(vertices).is_err());
     }
 
     #[test]
