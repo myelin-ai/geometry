@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::error::Error;
-use std::f64::consts::PI;
+use std::f64::consts::{PI, TAU};
 use std::fmt;
 
 /// A radian confined to the range of [0.0; 2π)
@@ -23,7 +23,7 @@ impl Radians {
     /// let rotation = Radians::try_new(PI).expect("Value was outside the range [0.0; 2π)");
     /// ```
     pub fn try_new(value: f64) -> Result<Self, RadiansError> {
-        if value >= 0.0 && value < 2.0 * PI {
+        if (0.0..TAU).contains(&value) {
             Ok(Radians { value })
         } else {
             Err(RadiansError::OutOfRange)
