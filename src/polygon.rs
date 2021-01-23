@@ -51,8 +51,8 @@ impl Polygon {
     }
 
     /// Apply translation specified by `translation`, represented as
-    /// a relative point
-    pub fn translate(&self, translation: Point) -> Self {
+    /// a vector
+    pub fn translate(&self, translation: Vector) -> Self {
         let translated_vertices = self
             .vertices
             .iter()
@@ -72,7 +72,7 @@ impl Polygon {
             .iter()
             .map(|&vertex| {
                 // See https://en.wikipedia.org/wiki/Rotation_matrix
-                let delta = vertex - point;
+                let delta = Vector::from_points(vertex, point);
                 let (rotation_sin, rotation_cos) = rotation.sin_cos();
                 let rotated_x = rotation_cos * delta.x + rotation_sin * delta.y + point.x;
                 let rotated_y = -rotation_sin * delta.x + rotation_cos * delta.y + point.y;
@@ -142,8 +142,7 @@ impl Polygon {
         vertices
             .iter()
             .zip(shifted_vertices)
-            .map(|(&first_vertex, &second_vertex)| second_vertex - first_vertex)
-            .map(Vector::from)
+            .map(|(&first_vertex, &second_vertex)| Vector::from_points(second_vertex, first_vertex))
     }
 
     fn scalar_project_onto_unit_vector(&self, axis: Vector) -> (f64, f64) {
@@ -278,8 +277,8 @@ mod tests {
             .unwrap()
     }
 
-    fn translation() -> Point {
-        Point { x: 30.0, y: 40.0 }
+    fn translation() -> Vector {
+        Vector { x: 30.0, y: 40.0 }
     }
 
     #[test]
@@ -296,6 +295,12 @@ mod tests {
             },
             polygon.translate(translation())
         );
+    }
+
+    #[test]
+    fn translate_does_nothing_when_zero() {
+        let polygon = polygon();
+        assert_eq!(polygon, polygon.translate(Vector::default()));
     }
 
     #[test]
@@ -364,6 +369,7 @@ mod tests {
     fn translates_and_rotates() {
         let polygon = polygon();
         let translation = translation();
+        let rotation_anchor_point = Point::from(translation);
         let translated_polygon = polygon.translate(translation);
 
         assert_eq!(
@@ -387,13 +393,14 @@ mod tests {
                     },
                 ],
             },
-            translated_polygon.rotate_around_point(Radians::try_new(3.0).unwrap(), translation)
+            translated_polygon
+                .rotate_around_point(Radians::try_new(3.0).unwrap(), rotation_anchor_point)
         );
     }
 
     #[test]
     fn contains_point_when_point_is_positive() {
-        let translation = Point { x: 10.43, y: 20.1 };
+        let translation = Vector { x: 10.43, y: 20.1 };
         let polygon = polygon().translate(translation);
         let point = Point { x: 12.0, y: 18.0 };
         assert!(polygon.contains_point(point));
@@ -401,7 +408,7 @@ mod tests {
 
     #[test]
     fn contains_point_when_point_is_negative() {
-        let translation = Point { x: -20.0, y: -5.0 };
+        let translation = Vector { x: -20.0, y: -5.0 };
         let polygon = polygon().translate(translation);
         let point = Point { x: -21.70, y: -2.3 };
         assert!(polygon.contains_point(point));
@@ -440,7 +447,7 @@ mod tests {
 
     #[test]
     fn does_not_contain_point_when_point_is_at_zero() {
-        let translation = Point { x: 11.0, y: 11.0 };
+        let translation = Vector { x: 11.0, y: 11.0 };
         let polygon = polygon().translate(translation);
         let point = Point::default();
         assert!(!polygon.contains_point(point));

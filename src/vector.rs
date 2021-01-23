@@ -12,6 +12,19 @@ pub struct Vector {
     pub y: f64,
 }
 
+impl Vector {
+    /// Constructs a new vector from a head and tail point.
+    ///
+    /// This is a shorthand for subtracting the position vector of the head point
+    /// from the position vector of the tail point.
+    pub fn from_points(head: Point, tail: Point) -> Self {
+        Vector {
+            x: head.x - tail.x,
+            y: head.y - tail.y,
+        }
+    }
+}
+
 impl Add for Vector {
     type Output = Vector;
 
