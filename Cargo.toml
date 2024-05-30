@@ -5,14 +5,17 @@ version = "2.4.2"
 authors = [
     "Jan Nils Ferner <jan@myelin.ch>",
     "Mathias Fischler <mathias@myelin.ch>",
-    "Ruben Schmidmeister <ruben@myelin.ch>",
+    "Tau Gärtli <git@tau.garden>",
     "Jeremy Stucki <jeremy@myelin.ch>",
 ]
 repository = "https://github.com/myelin-ai/geometry"
 homepage = "https://github.com/myelin-ai/geometry"
 documentation = "https://docs.rs/myelin-geometry"
 edition = "2018"
-license = "MIT/Apache-2.0"
+license = "MIT OR Apache-2.0"
+
+[badges.maintenance]
+status = "deprecated"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
